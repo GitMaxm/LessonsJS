@@ -1,4 +1,4 @@
-/* 
+/*
 let heightMark = 182;
 let weightMark = 81;
 
@@ -13,7 +13,10 @@ let isMarkMoreMassThanBob = massMark > massBob;
 console.log("ИМТ у Марка больше чем Боба? " + isMarkMoreMassThanBob); */
 
 
-let teamMarkRoundOne = 110;
+
+
+
+/*let teamMarkRoundOne = 110;
 let teamMarkRoundTwo = 120;
 let teamMarkRoundThree = 130;
 
@@ -52,4 +55,41 @@ if (teamMarkTotal > teamMerryTotal && teamMarkTotal > teamPolTotal) {
     console.log("Команда Мерри и Полла набрала одинакого очков");
 } else {
     console.log("Ничья! Все команды набрали одинаково очков");
+}*/
+
+
+
+/*
+function calculateTips(check) {
+    if (check <= 1000) {
+        console.log(`При чеке в ${check} рублей, чаевые составят ${check * 0.2}`);
+    } else if (check > 1000 && check <= 3000) {
+        console.log(`При чеке в ${check} рублей, чаевые составят ${check * 0.15}`);
+    } else {
+        console.log(`При чеке в ${check} рублей, чаевые составят ${check * 0.1}`);
+    }
 }
+calculateTips(1000);
+calculateTips(2000);
+calculateTips(5000);
+*/
+
+
+// let books = ["Фантастика", "Детектив", "Приключения", "Роман", "Триллер"];
+// for (let i = 0; i < books.length; i++) {
+//     console.log(`Индекс [${i}] с содержимым "${books[i]}"`);
+// }
+// books.forEach(function (item, index) {
+//     console.log(`Элемент массива "${item}" с индексом [${index}]`);
+// })
+
+
+let array1 = ["яблоко", "ананас", "банан", "груша", "киви"];
+array1.unshift("Картошка");
+console.log(array1);
+
+array1.push("Помидор", "Огурец");
+console.log(array1);
+
+let array2 = array1.slice(1, 6);
+console.log(array2);
