@@ -84,6 +84,7 @@ calculateTips(5000);
 // })
 
 
+/*
 let array1 = ["яблоко", "ананас", "банан", "груша", "киви"];
 array1.unshift("Картошка");
 console.log(array1);
@@ -93,3 +94,46 @@ console.log(array1);
 
 let array2 = array1.slice(1, 6);
 console.log(array2);
+*/
+
+let robot = {
+    name: "Спутник",
+    yearOfManufacture: 1999,
+    countryOfManufacture: "России",
+    sayHello: function () {
+        console.log(`Привет, меня зовут ${this.name}.`);
+    },
+    sayFrom: function () {
+        console.log(`Я производен в ${this.countryOfManufacture}.`);
+    },
+    sayAge: function () {
+        let ageRobot = new Date().getFullYear() - this.yearOfManufacture;
+        console.log(`Я выпущен в ${this.yearOfManufacture} году. Мне ${ageRobot}.`);
+    }
+}
+
+robot.sayHello();
+robot.sayFrom();
+robot.sayAge();
+
+
+
+
+function Robot(name, yearOfManufacture, countryOfManufacture) {
+    this.name = name;
+    this.yearOfManufacture = yearOfManufacture;
+    this.countryOfManufacture = countryOfManufacture;
+    this.sayHello = function () {
+        let calcAge = new Date().getFullYear() - yearOfManufacture;
+        this.ageRobot = calcAge;
+        console.log(`Всем привет, мое имя ${this.name}, мой возраст ${this.ageRobot} и год выпуска ${this.yearOfManufacture}. Страна производства ${this.countryOfManufacture}.`);
+    }
+}
+
+let robotOne = new Robot("R2D2", 2020, "China");
+let robotTwo = new Robot("RW258", 2018, "USA");
+
+
+robotOne.sayHello();
+robotTwo.sayHello();
+
