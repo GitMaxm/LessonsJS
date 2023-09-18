@@ -96,6 +96,9 @@ let array2 = array1.slice(1, 6);
 console.log(array2);
 */
 
+
+
+/*
 let robot = {
     name: "Спутник",
     yearOfManufacture: 1999,
@@ -117,8 +120,6 @@ robot.sayFrom();
 robot.sayAge();
 
 
-
-
 function Robot(name, yearOfManufacture, countryOfManufacture) {
     this.name = name;
     this.yearOfManufacture = yearOfManufacture;
@@ -136,4 +137,54 @@ let robotTwo = new Robot("RW258", 2018, "USA");
 
 robotOne.sayHello();
 robotTwo.sayHello();
+*/
 
+
+
+
+
+let robot = {
+    maxEnergy: 100,
+    energy: 100,
+    actions: [
+        { name: 'уборка', cost: 20 },
+        { name: 'завтрак', cost: 5 },
+        { name: 'обед', cost: 15 },
+        { name: 'ужин', cost: 10 },
+        { name: 'покупки', cost: 60 },
+    ],
+    charge: function () {
+        this.energy = this.maxEnergy;
+        console.warn(`Заряд завершен. Уровень энергии ${this.energy}%.`);
+    },
+    makeAction: function (action) {
+        const currentAction = this.actions.find(function (item) {
+            if (action === item.name) { return true }
+        })
+
+        if (!currentAction) {
+            console.log(`Не могу выполнить "${action}". Такой задачи нет в моем списке.`);
+            return;
+        }
+
+        if (this.energy >= currentAction.cost) {
+            this.energy = this.energy - currentAction.cost;
+            console.log(`Выполнил действие "${currentAction.name}". Осталось ${this.energy}% заряда.`);
+        } else {
+            console.error(
+                `Недостаточно энергии для выполнения действия "${currentAction.name}". Требуется ${currentAction.cost}% энергии, осталось ${this.energy}%.`
+            );
+        }
+    }
+};
+
+robot.makeAction("уборка");
+robot.makeAction("завтрак");
+robot.makeAction("обед");
+robot.makeAction("ужин");
+robot.makeAction("покупки");
+
+robot.charge();
+
+robot.makeAction("покупки");
+robot.makeAction("уборка"); 
