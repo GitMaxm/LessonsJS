@@ -187,4 +187,7 @@ robot.makeAction("покупки");
 robot.charge();
 
 robot.makeAction("покупки");
-robot.makeAction("уборка"); 
+robot.makeAction("уборка");
+
+
+
