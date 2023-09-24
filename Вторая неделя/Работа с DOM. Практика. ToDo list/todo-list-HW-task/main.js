@@ -1,0 +1,42 @@
+// Добавление новой задачи
+
+let form = document.querySelector("#addForm");
+let itemsList = document.querySelector("#items");
+
+form.addEventListener("submit", addItem);
+
+function addItem(e) {
+    // Отмена отправки формы
+    e.preventDefault();
+
+    // Находим импут с текстом для новой задачи
+    let newItemInput = document.querySelector("#newItemText");
+    // Получаем тект из импута
+    let newItemText = newItemInput.value;
+
+    // Создаем элемент для новой задачи
+    let newElement = document.createElement("li");
+    newElement.className = "list-group-item";
+
+    // Добавим текст в новый элемент
+    let newTextNode = document.createTextNode(newItemText);
+    newElement.appendChild(newTextNode);
+
+    //Создаем кнопку
+    let deleteBtn = document.createElement("button");
+    // Добавляем текст в кнопку
+    deleteBtn.appendChild(document.createTextNode("Удалить"));
+    // Добавляем класс
+    deleteBtn.className = "btn btn-light btn-sm float-right";
+    //Добавляем дата атрибут
+    deleteBtn.dataset.action = 'delete';
+
+    // Помещаем кнопку внутри тега Li
+    newElement.appendChild(deleteBtn);
+
+    //Добавляем в список со всеми задачами
+    itemsList.prepend(newElement);
+
+    // Очистим поле добавляния новой задачи
+    newItemInput.value = "";
+}
