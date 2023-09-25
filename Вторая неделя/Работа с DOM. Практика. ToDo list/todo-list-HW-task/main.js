@@ -1,10 +1,10 @@
-// Добавление новой задачи
-
 let form = document.querySelector("#addForm");
 let itemsList = document.querySelector("#items");
 
+// Добавление новой задачи прослушка события 
 form.addEventListener("submit", addItem);
 
+// Добавление новой задачи функция
 function addItem(e) {
     // Отмена отправки формы
     e.preventDefault();
@@ -39,4 +39,19 @@ function addItem(e) {
 
     // Очистим поле добавляния новой задачи
     newItemInput.value = "";
+}
+
+// Удаление элемента - прослушка клика
+itemsList.addEventListener("click", removeItem);
+
+// Удаление элемента - функция 
+function removeItem(e) {
+    if (
+        e.target.hasAttribute("data-action") &&
+        e.target.getAttribute("data-action") == "delete"
+    ) {
+        if (confirm("Удалить задачу?")) {
+            e.target.parentNode.remove();
+        }
+    }
 }
