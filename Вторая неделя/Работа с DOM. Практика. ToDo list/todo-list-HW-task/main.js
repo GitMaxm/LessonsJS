@@ -1,5 +1,6 @@
 let form = document.querySelector("#addForm");
 let itemsList = document.querySelector("#items");
+let filter = document.querySelector("#filter")
 
 // Добавление новой задачи прослушка события 
 form.addEventListener("submit", addItem);
@@ -54,4 +55,20 @@ function removeItem(e) {
             e.target.parentNode.remove();
         }
     }
+}
+
+
+// Фильтрация списка дел - прослушка ввода
+filter.addEventListener("keyup", filterItems);
+
+// Фильтрация списка дел - функция
+function filterItems(e) {
+    //получаем фразу для поиска и переводим ее в нижний регистр
+    let searchedText = e.target.value.toLowerCase();
+
+    //1. Получаем список всех задач
+    let items = itemsList.querySelectorAll("li");
+
+    // 2. Перебираем циклом все найденные теги li с задачами
+
 }
