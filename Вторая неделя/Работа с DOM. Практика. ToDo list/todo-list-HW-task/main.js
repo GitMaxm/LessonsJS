@@ -5,6 +5,12 @@ let filter = document.querySelector("#filter")
 // Добавление новой задачи прослушка события 
 form.addEventListener("submit", addItem);
 
+// Удаление элемента - прослушка клика
+itemsList.addEventListener("click", removeItem);
+
+// Фильтрация списка дел - прослушка ввода
+filter.addEventListener("keyup", filterItems);
+
 // Добавление новой задачи функция
 function addItem(e) {
     // Отмена отправки формы
@@ -42,9 +48,6 @@ function addItem(e) {
     newItemInput.value = "";
 }
 
-// Удаление элемента - прослушка клика
-itemsList.addEventListener("click", removeItem);
-
 // Удаление элемента - функция 
 function removeItem(e) {
     if (
@@ -57,10 +60,6 @@ function removeItem(e) {
     }
 }
 
-
-// Фильтрация списка дел - прослушка ввода
-filter.addEventListener("keyup", filterItems);
-
 // Фильтрация списка дел - функция
 function filterItems(e) {
     //получаем фразу для поиска и переводим ее в нижний регистр
@@ -69,6 +68,16 @@ function filterItems(e) {
     //1. Получаем список всех задач
     let items = itemsList.querySelectorAll("li");
 
-    // 2. Перебираем циклом все найденные теги li с задачами
-
+    // Перебираем циклом все найденные теги li с задачами
+    // Проверяем вхождение искомой подстроки в текст задачи
+    items.forEach(function (item) {
+        let itemText = item.firstChild.textContent.toLowerCase;
+        if (itemText.indexOf(searchedText) != -1) {
+            // Если вхождение есть - показываем элемент с задачей
+            item.style.display = "block";
+        } else {
+            // если вхождения нет - скрываем эелемент с задачей
+            item.style.display = "none";
+        }
+    });
 }
