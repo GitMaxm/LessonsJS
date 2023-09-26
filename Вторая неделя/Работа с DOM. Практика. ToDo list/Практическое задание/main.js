@@ -71,7 +71,7 @@ function filterItems(e) {
     // Перебираем циклом все найденные теги li с задачами
     // Проверяем вхождение искомой подстроки в текст задачи
     items.forEach(function (item) {
-        let itemText = item.firstChild.textContent.toLowerCase;
+        let itemText = item.firstChild.textContent.toLowerCase();
         if (itemText.indexOf(searchedText) != -1) {
             // Если вхождение есть - показываем элемент с задачей
             item.style.display = "block";
