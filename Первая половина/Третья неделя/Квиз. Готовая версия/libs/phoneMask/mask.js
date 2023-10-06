@@ -7,7 +7,7 @@ const mask = (selector) => {
                 phone = this.value.replace(/[\s#-)(]/g, '');
 
             if (phone.includes(code)) {
-                console.log(phone, code);
+                // console.log(phone, code);
                 matrix = item.code;
             }
         });
