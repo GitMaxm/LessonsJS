@@ -1,9 +1,10 @@
 let calculatorModule = (function () {
     let a = 0;
     let b = 0;
+    let result;
 
     function setNumbers(numberA, numberB) {
-        if (Number.isInteger(numberA, numberB)) {
+        if (Number.isInteger(numberA) && Number.isInteger(numberB)) {
             if (numberA >= 0 && numberB >= 0) {
                 a = numberA;
                 b = numberB;
