@@ -9,7 +9,21 @@ const value = document.querySelector('#value')
 const incomesList = document.querySelector('#incomes-list');
 const expensesList = document.querySelector('#expenses-list');
 
+const budgetEl = document.querySelector('#budget');
+const totalIncomeEl = document.querySelector('#total-income');
+const totlaExpenseEl = document.querySelector('#total-expense');
+const percentsWrapper = document.querySelector('#expense-percents-wrapper');
+
+const monthEl = document.querySelector('#month');
+const yearEl = document.querySelector('#year');
+
 // Functions
+const priceFormatter = new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+})
+
 function insertTestData() {
     const testData = [
         { type: 'inc', title: 'Фриланс', value: 1500 },
@@ -38,9 +52,75 @@ function clearForm() {
     form.reset()
 }
 
-// Actions
-insertTestData();
+function calcBudget() {
 
+    // Считаем общий доход
+    const totalIncome = budget.reduce(function (total, element) {
+        if (element.type === 'inc') {
+            return total + element.value;
+        } else {
+            return total;
+        }
+    }, 0)
+    console.log('totalIncome', totalIncome);
+
+    // Считаем общий расход
+    const totalExpense = budget.reduce(function (total, element) {
+        if (element.type === 'exp') {
+            return total + element.value;
+        } else {
+            return total;
+        }
+    }, 0);
+    console.log('totalExpense', totalExpense);
+
+    const totalBudget = totalIncome - totalExpense;
+    console.log('totalBudget', totalBudget);
+
+    let expensePercents = 0;
+    if (totalIncome) {
+        expensePercents = Math.round((totalExpense * 100) / totalIncome)
+    }
+    console.log('expensePercents', expensePercents);
+
+
+    budgetEl.innerHTML = priceFormatter.format(totalBudget);
+
+    totalIncomeEl.innerHTML = '+ ' + priceFormatter.format(totalIncome);
+    totlaExpenseEl.innerHTML = '- ' + priceFormatter.format(totalExpense);
+
+    if (expensePercents) {
+        const html = `<div class="badge">${expensePercents}%</div> `;
+        percentsWrapper.innerHTML = html;
+    } else {
+        percentsWrapper.innerHTML = '';
+    }
+
+}
+
+function displayMonth() {
+    const now = new Date();
+
+    const year = now.getFullYear(); // 2023
+
+    const timeFormatter = new Intl.DateTimeFormat('ru-RU', {
+        month: 'long'
+    });
+    const month = timeFormatter.format(now);
+
+    console.log(year);
+    console.log(month);
+
+    monthEl.innerHTML = month;
+    yearEl.innerHTML = year;
+}
+
+// Actions
+displayMonth()
+insertTestData();
+calcBudget();
+
+// Добавление
 form.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -72,7 +152,7 @@ form.addEventListener('submit', function (e) {
         id: id,
         type: type.value,
         title: title.value.trim(),
-        value: value.value,
+        value: +value.value,
     };
     console.log(record);
 
@@ -81,10 +161,13 @@ form.addEventListener('submit', function (e) {
 
     // Отображаем Доход на странице
     if (record.type === 'inc') {
-        const html = `<li data-id="${record.id}" class="budget-list__item item item--income">
+        const html = `<li data-id="${record.id
+            }" class="budget-list__item item item--income">
                         <div class="item__title">${record.title}</div>
                         <div class="item__right">
-                            <div class="item__amount">+ ${record.value}</div>
+                            <div class="item__amount">+ ${priceFormatter.format(
+                record.value
+            )}</div>
                             <button class="item__remove">
                                 <img
                                     src="./img/circle-green.svg"
@@ -99,11 +182,12 @@ form.addEventListener('submit', function (e) {
 
     // Отображаем Расход на странице
     if (record.type === 'exp') {
-        const html = `<li data-id="${record.id}" class="budget-list__item item item--expense">
+        const html = `<li data-id="${record.id
+            }" class="budget-list__item item item--expense">
                         <div class="item__title">${record.title}</div>
                         <div class="item__right">
                             <div class="item__amount">
-                                - ${record.value}
+                                - ${priceFormatter.format(record.value)}
                             </div>
                             <button class="item__remove">
                                 <img src="./img/circle-red.svg" alt="delete" />
@@ -114,7 +198,38 @@ form.addEventListener('submit', function (e) {
         expensesList.insertAdjacentHTML('afterbegin', html)
     }
 
+    // Посчитать бюджет
+    calcBudget();
+
     console.log(budget);
     clearForm();
     insertTestData();
+})
+
+// Удаление
+document.body.addEventListener('click', function (e) {
+
+    // Кнопка удалить
+    if (e.target.closest('button.item__remove')) {
+        // Находим ближайший родительский элемент с тегом li
+        const recordElement = e.target.closest('li.budget-list__item');
+        // Перевод строки в число
+        const id = +recordElement.dataset.id;
+
+        const index = budget.findIndex(function (element) {
+            if (id === element.id) {
+                return true;
+            }
+        });
+
+        // Удалить из массива
+        budget.splice(index, 1);
+
+        // Удалить со страницы
+        recordElement.remove();
+
+        // Посчитать бюджет
+        calcBudget();
+    }
+
 })
