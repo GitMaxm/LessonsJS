@@ -18,10 +18,12 @@ const monthEl = document.querySelector('#month');
 const yearEl = document.querySelector('#year');
 
 // Functions
+
+// Фоматер чисел
 const priceFormatter = new Intl.NumberFormat('ru-RU', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
+    style: 'currency', // Фомарироваться как денежная сумма
+    currency: 'RUB', // В какой валюте будет отображаться
+    maximumFractionDigits: 0 // Максимальное количество десятичных знаков после запятой при форматировании чисел
 })
 
 function insertTestData() {
@@ -62,9 +64,9 @@ function calcBudget() {
             return total;
         }
     }, 0)
-    console.log('totalIncome', totalIncome);
 
     // Считаем общий расход
+    // Сумма элементов массива
     const totalExpense = budget.reduce(function (total, element) {
         if (element.type === 'exp') {
             return total + element.value;
@@ -72,17 +74,13 @@ function calcBudget() {
             return total;
         }
     }, 0);
-    console.log('totalExpense', totalExpense);
 
     const totalBudget = totalIncome - totalExpense;
-    console.log('totalBudget', totalBudget);
 
     let expensePercents = 0;
     if (totalIncome) {
         expensePercents = Math.round((totalExpense * 100) / totalIncome)
     }
-    console.log('expensePercents', expensePercents);
-
 
     budgetEl.innerHTML = priceFormatter.format(totalBudget);
 
@@ -98,11 +96,13 @@ function calcBudget() {
 
 }
 
+//Показать дату 
 function displayMonth() {
     const now = new Date();
 
     const year = now.getFullYear(); // 2023
 
+    //Форматер, возвращаем только месяц
     const timeFormatter = new Intl.DateTimeFormat('ru-RU', {
         month: 'long'
     });
@@ -115,7 +115,7 @@ function displayMonth() {
     yearEl.innerHTML = year;
 }
 
-// Actions
+// Действия
 displayMonth()
 insertTestData();
 calcBudget();
@@ -182,8 +182,7 @@ form.addEventListener('submit', function (e) {
 
     // Отображаем Расход на странице
     if (record.type === 'exp') {
-        const html = `<li data-id="${record.id
-            }" class="budget-list__item item item--expense">
+        const html = `<li data-id="${record.id}" class="budget-list__item item item--expense">
                         <div class="item__title">${record.title}</div>
                         <div class="item__right">
                             <div class="item__amount">
