@@ -7,14 +7,4 @@ function init() {
     view.renderApplications(applications);
 }
 
-
-
-
-
-
-
-
-
-
-
 init()

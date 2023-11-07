@@ -8,7 +8,7 @@ class Application {
         this.phone = phone
         this.email = email
         this.product = product
-        this.dateTime = new Date().toISOString()
+        this.date = new Date().toISOString()
         this.status = 'new'
     }
 }
@@ -62,7 +62,7 @@ function prepareApplications(applications) {
         return {
             ...item,
             // Перезаписали дату(созадли новую дату и получаем ее в локальном формате)
-            dateTime: new Date(item.dateTime).toLocaleDateString(),
+            date: new Date(item.date).toLocaleDateString(),
             productName: products[item.product],
             statusName: statuses[item.status]
         }
@@ -71,7 +71,30 @@ function prepareApplications(applications) {
 
 
 function getApplicationById(id) {
+    // Возвращаем один элемент массива
+    const application = applications.find((item) => item.id == id)
 
+    // Только дата
+    application.dateDate = new Date(application.date).toLocaleDateString()
+    // Только время
+    application.dateTime = new Date(application.date).toLocaleTimeString()
+
+    return application
+}
+
+
+function updateApplication(formData) {
+    // Находим заявку 
+    // Напрямую обратиться не можем, но через метод get получаем значение по имени id
+    const application = getApplicationById(formData.get('id'))
+    // Обновляем значения заявки 
+    application.name = formData.get('name')
+    application.email = formData.get('email')
+    application.phone = formData.get('phone')
+    application.product = formData.get('product')
+    application.status = formData.get('status')
+    // Сохраняем данные 
+    saveApplications()
 }
 
 export { addApplication, getApplications, getApplicationById }

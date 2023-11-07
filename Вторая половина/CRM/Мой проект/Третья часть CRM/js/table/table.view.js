@@ -19,7 +19,7 @@ function renderApplications(applications) {
         // Формируем шаблонную строку
         const template = `<tr>
                 <th scope="row">${application.id}</th>
-                <td>${application.dateTime}</td>
+                <td>${application.date}</td>
                 <td>${application.productName}</td>
                 <td>${application.name}</td>
                 <td>${application.email}</td>
