@@ -13,6 +13,38 @@ class Application {
     }
 }
 
+//Будет описывать текущий фильтр
+const filter = {
+    products: 'all',
+    status: 'all'
+}
+
+// Принемает в себя свойство фильтра, которое нужно изменить и значение, на какое значение нужно
+// изменить свойство фильтра 
+function changeFilter(prop, value) {
+    // Обращаемся к фильру по свойсту и устанавливаем значение
+    filter[prop] = value
+    return filter
+}
+
+function filterApplications(filter) {
+    let filteredApplications;
+
+    // Фильтрация по продукту
+    if (filter.products !== 'all') {
+        filteredApplications = applications.filter((elem) => elem.product === filter.products)
+    } else {
+        filteredApplications = [...applications]
+    }
+
+    //Филтрация по статусу
+    if (filter.status !== 'all') {
+        filteredApplications = filteredApplications.filter((elem) => elem.status === filter.status)
+    }
+
+    return prepareApplications(filteredApplications)
+}
+
 function addApplication(formData) {
     // определяем id
     let id = applications.length > 0 ? applications[applications.length - 1]['id'] + 1 : 1;
@@ -101,5 +133,7 @@ export {
     addApplication,
     getApplications,
     getApplicationById,
-    updateАpplication
+    updateАpplication,
+    changeFilter,
+    filterApplications
 }
