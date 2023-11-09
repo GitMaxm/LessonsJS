@@ -49,6 +49,7 @@ function updateStatusLinks(value) {
 
     // Left side bar
     elements.leftStatusLinks.forEach((link) => link.classList.remove('active'))
+    // Внутри панели ищем класс active
     elements.leftPanelNav.querySelector(`a[data-value="${value}"]`).classList.add('active')
 }
 

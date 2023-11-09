@@ -45,6 +45,11 @@ function filterApplications(filter) {
     return prepareApplications(filteredApplications)
 }
 
+function countNewApplications() {
+    const newApplications = applications.filter((elem) => elem.status === 'new')
+    return newApplications.length
+}
+
 function addApplication(formData) {
     // определяем id
     let id = applications.length > 0 ? applications[applications.length - 1]['id'] + 1 : 1;

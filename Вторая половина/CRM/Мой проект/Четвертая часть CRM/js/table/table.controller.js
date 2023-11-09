@@ -13,7 +13,10 @@ function addEventListeners() {
     view.elements.select.addEventListener('change', filterProducts)
     // По клику меняем статус      
     view.elements.topStatusBar.addEventListener('click', filterByStatus)
-
+    // Обходим колекцию ссылок
+    view.elements.leftStatusLinks.forEach((link) => {
+        link.addEventListener('click', filterByStatus)
+    })
 }
 
 // запуск методов из модели, которые будут фильтровать продукты
