@@ -14,9 +14,35 @@ class Application {
 }
 
 //Будет описывать текущий фильтр
-const filter = {
-    products: 'all',
-    status: 'all'
+
+const products = {
+    'course-html': 'Курс по верстке',
+    'course-js': 'Курс по JavaScript',
+    'course-vue': 'Курс по Vue JS',
+    'course-php': 'Курс по PHP',
+    'course-wordpress': 'Курс по WordPress',
+}
+
+const statuses = {
+    'new': 'Новая',
+    'inwork': 'В работе',
+    'complete': 'Завершена',
+}
+
+const filter = loadFilter()
+
+function loadFilter() {
+    let filter = {
+        products: 'all',
+        status: 'all'
+    }
+
+    // Если есть в LS то достаем значение
+    if (localStorage.getItem('filter')) {
+        filter = JSON.parse(localStorage.getItem('filter'))
+    }
+
+    return filter
 }
 
 // Принемает в себя свойство фильтра, которое нужно изменить и значение, на какое значение нужно
@@ -24,6 +50,7 @@ const filter = {
 function changeFilter(prop, value) {
     // Обращаемся к фильру по свойсту и устанавливаем значение
     filter[prop] = value
+    localStorage.setItem('filter', JSON.stringify(filter))
     return filter
 }
 
@@ -37,12 +64,17 @@ function filterApplications(filter) {
         filteredApplications = [...applications]
     }
 
-    //Филтрация по статусу
+    // Филтрация по статусу
     if (filter.status !== 'all') {
         filteredApplications = filteredApplications.filter((elem) => elem.status === filter.status)
     }
 
     return prepareApplications(filteredApplications)
+}
+
+// возвращает отфильтрованные заявки 
+function getApplications() {
+    return filterApplications(filter);
 }
 
 function countNewApplications() {
@@ -73,24 +105,6 @@ function loadApplications() {
     return localStorage.getItem('applications') ? JSON.parse(localStorage.getItem('applications')) : []
 }
 
-// возвращает заявки 
-function getApplications() {
-    return prepareApplications(applications)
-}
-
-const products = {
-    'course-html': 'Курс по верстке',
-    'course-js': 'Курс по JavaScript',
-    'course-vue': 'Курс по Vue JS',
-    'course-php': 'Курс по PHP',
-    'course-wordpress': 'Курс по WordPress',
-}
-
-const statuses = {
-    'new': 'Новая',
-    'inwork': 'В работе',
-    'complete': 'Завершена',
-}
 
 // Обрабатывает заявки
 function prepareApplications(applications) {
@@ -99,7 +113,7 @@ function prepareApplications(applications) {
         return {
             ...item,
             // Перезаписали дату(созадли новую дату и получаем ее в локальном формате)
-            date: new Date(item.date).toLocaleDateString(),
+            dateToDisplay: new Date(item.date).toLocaleDateString(),
             productName: products[item.product],
             statusName: statuses[item.status]
         }
@@ -134,11 +148,19 @@ function updateАpplication(formData) {
     saveApplications()
 }
 
+// возвращает фильтр
+function getFilter() {
+    // Копируем объект вилтра и возвращаем его копию
+    return { ...filter }
+}
+
 export {
     addApplication,
     getApplications,
     getApplicationById,
     updateАpplication,
     changeFilter,
-    filterApplications
+    filterApplications,
+    countNewApplications,
+    getFilter
 }

@@ -6,6 +6,15 @@ function init() {
     const applications = model.getApplications()
     view.renderApplications(applications)
     addEventListeners()
+
+    const newApplicationsCount = model.countNewApplications()
+    view.renderBadgeNew(newApplicationsCount)
+
+    // Получаем фильр из модели
+    const filter = model.getFilter();
+
+    // визуальное обновление фильтров на странице
+    view.updateFilter(filter)
 }
 
 function addEventListeners() {
