@@ -403,7 +403,7 @@ function functionFirst() {
             if (result) {
                 resolve();
             } else {
-                reject("Error message from First function", 150);
+                reject("Error message from First function");
             }
         }, 1500);
     });
@@ -413,11 +413,11 @@ function functionSecond() {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             console.log("functionSecond");
-            const result = true;
+            const result = false;
             if (result) {
                 resolve();
             } else {
-                reject("Error message from Second function", 150);
+                reject("Error message from Second function");
             }
         }, 1000);
     });
@@ -427,11 +427,11 @@ function functionThird() {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             console.log("functionThird");
-            const result = false;
+            const result = true;
             if (result) {
                 resolve();
             } else {
-                reject("Error message from Third function", 150);
+                reject("Error message from Third function");
             }
         }, 500);
     });
